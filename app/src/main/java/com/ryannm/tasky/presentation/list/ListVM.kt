@@ -1,7 +1,7 @@
 package com.ryannm.tasky.presentation.list
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ryannm.tasky.data.TaskDatabase
@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 private const val TAG = "ListVM"
-class ListVM:ViewModel() {
+class ListVM(
+    savedStateHandle: SavedStateHandle
+):ViewModel() {
     private val _tasks = MutableStateFlow(listOf<Task>())
     val tasks = _tasks.asStateFlow()
 

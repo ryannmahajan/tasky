@@ -12,12 +12,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 object ListScreen {
     const val route = "list"
+
     @Composable
     fun screen(
-        listVM: ListVM = ListVM()
+        listVM: ListVM = viewModel(),
+        openDetailWithID:(Int)->Unit
     ) {
         val tasks by listVM.tasks.collectAsStateWithLifecycle()
 
@@ -27,7 +30,10 @@ object ListScreen {
                 style = MaterialTheme.typography.headlineLarge.apply {  })
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(tasks) {
-                    Task(task = it) { checked ->
+                    Task(task = it,
+                        onTaskClick = {
+                            openDetailWithID(it.id)
+                        }) { checked ->
                         listVM.setChecked(it, checked)
                     }
                 }

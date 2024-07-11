@@ -20,10 +20,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.ryannm.tasky.R
 
 object DetailScreen {
-    const val route = "detail"
+    private const val route = "detail"
+    const val taskId = "taskID"
+
+    const val routeWithArguments = "$route?$taskId={$taskId}"
+    val arguments= listOf(
+        navArgument(taskId) {
+            type = NavType.IntType
+            defaultValue = 0
+        }
+    )
+
+    fun route(id:Int?):String = "$route?$taskId=$id"
     @Composable
     fun screen(
         detailVM: DetailVM = viewModel(),
@@ -39,7 +52,7 @@ object DetailScreen {
         Column (
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.SpaceAround
         ) {
             OutlinedTextField(value = task.title,
                 onValueChange = detailVM::onTitleChange,

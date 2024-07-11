@@ -1,6 +1,7 @@
 package com.ryannm.tasky.presentation.detail
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ryannm.tasky.data.TaskDatabase
@@ -10,12 +11,25 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 private const val TAG = "DetailVM"
-class DetailVM:ViewModel() {
+class DetailVM(
+    savedStateHandle: SavedStateHandle
+):ViewModel() {
     private val _task = MutableStateFlow(Task())
     val task = _task.asStateFlow()
 
     private val _goBack = MutableStateFlow(false)
     val goBack = _goBack.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            (savedStateHandle.get(DetailScreen.taskId) as Int?)?.let {
+                if (it!=0) {
+                    _task.value = TaskDatabase.getDao().getTaskById(it)
+                    Log.d(TAG, "Got task ${task.value}")
+                }
+            }
+        }
+    }
 
     fun onTitleChange(it:String) {
         _task.value = _task.value.copy(title = it)

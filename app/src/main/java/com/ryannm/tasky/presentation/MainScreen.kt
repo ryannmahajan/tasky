@@ -1,6 +1,7 @@
 package com.ryannm.tasky.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,15 +12,21 @@ import com.ryannm.tasky.presentation.list.ListScreen
 fun MainScreen() {
     val navController = rememberNavController()
     NavHost(navController = navController,
-        startDestination = DetailScreen.route) {
+        startDestination = ListScreen.route) {
         composable(ListScreen.route) {
-            ListScreen.screen()
+            ListScreen.screen { id ->
+                navController.navigateSingleTopTo(DetailScreen.route(id))
+            }
         }
 
-        composable(DetailScreen.route) {
+        composable(DetailScreen.routeWithArguments, arguments = DetailScreen.arguments) {
             DetailScreen.screen {
-                navController.navigate(ListScreen.route)
+                navController.navigateSingleTopTo(ListScreen.route)
             }
         }
     }
 }
+
+
+private fun NavHostController.navigateSingleTopTo(route: String) =
+    this.navigate(route) { launchSingleTop = true }
