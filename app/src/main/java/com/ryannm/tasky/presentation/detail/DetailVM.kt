@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "DetailVM"
 class DetailVM(
-    savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ):ViewModel() {
     private val _task = MutableStateFlow(Task())
     val task = _task.asStateFlow()
@@ -40,8 +40,13 @@ class DetailVM(
     }
 
     fun onSave() {
+        val id = ((savedStateHandle.get(DetailScreen.taskId) as Int?))
         viewModelScope.launch {
-            TaskDatabase.getDao().insert(task.value)
+            if (id==null || id==0) {
+                TaskDatabase.getDao().insert(task.value)
+            } else {
+                TaskDatabase.getDao().update(task.value)
+            }
             Log.d(TAG, "Saved ${task.value}")
             _goBack.value = true
         }

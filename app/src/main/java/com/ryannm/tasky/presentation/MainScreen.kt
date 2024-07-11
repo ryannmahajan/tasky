@@ -11,6 +11,7 @@ import com.ryannm.tasky.presentation.list.ListScreen
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+
     NavHost(navController = navController,
         startDestination = ListScreen.route) {
         composable(ListScreen.route) {
