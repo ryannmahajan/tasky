@@ -14,6 +14,9 @@ class DetailVM:ViewModel() {
     private val _task = MutableStateFlow(Task())
     val task = _task.asStateFlow()
 
+    private val _goBack = MutableStateFlow(false)
+    val goBack = _goBack.asStateFlow()
+
     fun onTitleChange(it:String) {
         _task.value = _task.value.copy(title = it)
     }
@@ -26,6 +29,7 @@ class DetailVM:ViewModel() {
         viewModelScope.launch {
             TaskDatabase.getDao().insert(task.value)
             Log.d(TAG, "Saved ${task.value}")
+            _goBack.value = true
         }
     }
 }
