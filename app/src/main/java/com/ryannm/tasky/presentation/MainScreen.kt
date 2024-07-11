@@ -6,5 +6,5 @@ import com.ryannm.tasky.presentation.list.ListScreen
 
 @Composable
 fun MainScreen() {
-    DetailScreen()
+    ListScreen()
 }

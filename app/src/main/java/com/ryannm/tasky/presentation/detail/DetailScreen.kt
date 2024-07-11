@@ -39,7 +39,7 @@ fun DetailScreen(
             onValueChange = detailVM::onDescriptionChange,
             textStyle = MaterialTheme.typography.bodyLarge,
             label = {Text(stringResource(R.string.description))})
-        Button(onClick = {} ) {
+        Button(onClick = detailVM::onSave ) {
             Text("Save")
         }
     }

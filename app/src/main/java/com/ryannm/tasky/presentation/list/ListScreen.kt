@@ -1,5 +1,6 @@
 package com.ryannm.tasky.presentation.list
 
+import android.graphics.fonts.FontStyle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,10 +23,12 @@ fun ListScreen(
     Column (modifier = Modifier.fillMaxSize()) {
         Text("${tasks.size} TASKS",
             modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-            style = MaterialTheme.typography.headlineLarge)
+            style = MaterialTheme.typography.headlineLarge.apply {  })
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(tasks) {
-                Task(task = it)
+                Task(task = it) { checked ->
+                    listVM.setChecked(it, checked)
+                }
             }
         }
     }
