@@ -1,4 +1,4 @@
-package com.ryannm.tasky.ui.theme
+package com.ryannm.tasky.presentation.theme
 
 import android.app.Activity
 import android.os.Build
