@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tasky</string>
+    <string name="title">Name</string>
+    <string name="description">Description</string>
 </resources>
